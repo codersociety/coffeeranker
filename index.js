@@ -31,3 +31,26 @@ exports.getStoreLocation = function (companyId, locationId, response) {
 		}
     });
 }
+
+
+//Demo Code
+var flatiron = require('flatiron');
+var beermenu = require('./beermenu');
+
+
+app = flatiron.app;
+app.use(flatiron.plugins.http);
+
+beermenu.initialize();
+
+app.router.get('/storelocation/:companyId/:locationId', function (companyId, locationId) {
+	beermenu.getStoreLocation(companyId, locationId, this.res);
+});
+app.router.get('/menusettings/:menuId', function (menuId) {
+	beermenu.getMenuSettings(menuId, this.res);
+});
+app.router.get('/beermenu/:companyId/:locationId/:itemType', function (companyId, locationId, itemType) {
+	beermenu.getBeermenu(companyId, locationId, itemType, this.res);
+});
+
+app.start(3000);
