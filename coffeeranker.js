@@ -1,5 +1,3 @@
-
-//Demo Code
 var flatiron = require('flatiron');
 var coffeemenu = require('./coffeemenu');
 
@@ -23,5 +21,20 @@ app.router.get('/beverage/:beverageId', function(beverageId) {
 });
 app.router.get('/review/:reviewId', function(reviewId) {
 	coffeemenu.getReview(reviewId, this.res);
+});
+app.router.post('/location', function () {
+    coffeemenu.postStoreLocation(this.res, this.req.body);
+});
+app.router.post('/barista', function () {
+    coffeemenu.postBarista(this.res, this.req.body);
+});
+app.router.post('/drinker', function() {
+	coffeemenu.postDrinker(this.res, this.req.body);
+});
+app.router.post('/beverage', function() {
+	coffeemenu.postBeverage(this.res, this.req.body);
+});
+app.router.post('/review', function() {
+	coffeemenu.postReview(this.res, this.req.body);
 });
 app.start(3000);
