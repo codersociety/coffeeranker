@@ -64,3 +64,5 @@ db/*.sqlite3
 log/*
 tmp/*
 public/system/*
+
+node_modules
