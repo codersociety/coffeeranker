@@ -1,7 +1,18 @@
+dbs = require('./config/databases')
+mongode = require('mongode');
+
+var mongoDb;
+
+initialize = function () {
+
+    mongoDb = dbs.mongo;
+
+}
+
 // GET
 
 exports.getBarista = function (baristaId, response) {
-  	var baristaCollection = dbs.mongo.collection('BaristaLocation');
+  	var baristaCollection = mongoDb.collection('BaristaLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	baristaLocationCollection.findOne({"BaristaId" : baristaId}, 
 	    function(err, object) {
@@ -17,7 +28,7 @@ exports.getBarista = function (baristaId, response) {
 }
 
 exports.getDrinker = function (drinkerId, response) {
-  	var drinkerCollection = dbs.mongo.collection('DrinkerLocation');
+  	var drinkerCollection = mongoDb.collection('DrinkerLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	drinkerLocationCollection.findOne({"DrinkerId" : drinkerId}, 
 	    function(err, object) {
@@ -33,7 +44,7 @@ exports.getDrinker = function (drinkerId, response) {
 }
 
 exports.getLocation = function (locationId, response) {
-  	var locationCollection = dbs.mongo.collection('LocationLocation');
+  	var locationCollection = mongoDb.collection('LocationLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	locationLocationCollection.findOne({"LocationId" : locationId}, 
 	    function(err, object) {
@@ -49,7 +60,7 @@ exports.getLocation = function (locationId, response) {
 }
 
 exports.getBeverage = function (beverageId, response) {
-  	var beverageCollection = dbs.mongo.collection('BeverageLocation');
+  	var beverageCollection = mongoDb.collection('BeverageLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	beverageLocationCollection.findOne({"BeverageId" : beverageId}, 
 	    function(err, object) {
@@ -65,7 +76,7 @@ exports.getBeverage = function (beverageId, response) {
 }
 
 exports.getReview = function (reviewId, response) {
-  	var reviewCollection = dbs.mongo.collection('ReviewLocation');
+  	var reviewCollection = mongoDb.collection('ReviewLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	reviewLocationCollection.findOne({"ReviewId" : reviewId}, 
 	    function(err, object) {
@@ -83,7 +94,7 @@ exports.getReview = function (reviewId, response) {
 // POST
 
 exports.postBarista = function (response, request_body) {
-  	var baristaCollection = dbs.mongo.collection('BaristaLocation');
+  	var baristaCollection = mongoDb.collection('BaristaLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
         baristaLocationCollection.save(request_body,
 	    function(err, object) {
@@ -99,7 +110,7 @@ exports.postBarista = function (response, request_body) {
 }
 
 exports.postDrinker = function (response, request_body) {
-  	var drinkerCollection = dbs.mongo.collection('DrinkerLocation');
+  	var drinkerCollection = mongoDb.collection('DrinkerLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	drinkerLocationCollection.save(request_body, 
 	    function(err, object) {
@@ -115,7 +126,7 @@ exports.postDrinker = function (response, request_body) {
 }
 
 exports.postLocation = function (response, request_body) {
-  	var locationCollection = dbs.mongo.collection('LocationLocation');
+  	var locationCollection = mongoDb.collection('LocationLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	locationLocationCollection.save(request_body,
 	    function(err, object) {
@@ -131,7 +142,7 @@ exports.postLocation = function (response, request_body) {
 }
 
 exports.postBeverage = function (response, request_body) {
-  	var beverageCollection = dbs.mongo.collection('BeverageLocation');
+  	var beverageCollection = mongoDb.collection('BeverageLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	beverageLocationCollection.save(request_body, 
 	    function(err, object) {
@@ -147,7 +158,7 @@ exports.postBeverage = function (response, request_body) {
 }
 
 exports.postReview = function (response, request_body) {
-  	var reviewCollection = dbs.mongo.collection('ReviewLocation');
+  	var reviewCollection = mongoDb.collection('ReviewLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	reviewLocationCollection.save(request_body, 
 	    function(err, object) {
