@@ -15,10 +15,9 @@ dbs.neo4j.InsertNode({
 });
 
 
-coffeeRankerDb = mongode.connect('mongo://66.150.174.182:27017/CoffeeRanker');
 
 exports.getStoreLocation = function (companyId, locationId, response) {
-  	var storeLocationCollection = coffeeRankerDb.collection('StoreLocation');
+  	var storeLocationCollection = dbs.mongo.collection('StoreLocation');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	storeLocationCollection.findOne({$and: [{"CompanyId" : companyId}, 
 								{"LocationId" : locationId}]}, function(err, object) {
