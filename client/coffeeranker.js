@@ -1,6 +1,6 @@
 (function(){
 
-window.Beverage = Backbone.Model.extend({
+window.Drink = Backbone.Model.extend({
 
 });
 
@@ -16,9 +16,9 @@ window.Drinker = Backbone.Model.extend({
 
 });
 
-window.BeverageList = Backbone.Collection.extend({
-	model: Beverage,
-	localStorage: new Store('beverages'),
+window.DrinkList = Backbone.Collection.extend({
+	model: Drink,
+	localStorage: new Store('drinks'),
 	nextOrder: function(){
 		if(!this.length)return 1;
 		return this.last().get('order')+1;
@@ -27,11 +27,11 @@ window.BeverageList = Backbone.Collection.extend({
 		return beverage.get('order');
 	},
 	pluralize: function(count){
-		return count == 1 ? 'beverage' : 'beverages';
+		return count == 1 ? 'drink' : 'drinks';
 	}
 });
 
-window.Beverages = new BeverageList;
+window.Drinks = new DrinkList;
 
 
 window.BarristaList = Backbone.Collection.extend({
