@@ -1,6 +1,6 @@
 {
   "author": "Coder Society <eric.redmond@gmail.com>",
-  "name": "CoffeeRanker - CoffeeDrinker",
+  "name": "coffeeranker",
   "description": "Caffeine Delivery Subsystem",
   "version": "0.1.0",
   "homepage": "http://codersociety.org/",
@@ -18,6 +18,7 @@
   "dependencies": {
     "flatiron":      "~>0.1.16",
     "mongode":       "~>0.1.3",    
+    "node-neo4j":    "~>0.1.1"    
   },
   "devDependencies": {
     "vows": ">=0.5.0"
