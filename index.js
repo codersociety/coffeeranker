@@ -1,5 +1,7 @@
 dbs = require('./config/databases')
 
+// Usage notes: https://github.com/philippkueng/node-neo4j
+
 dbs.neo4j.InsertNode({
   name: 'Darth Vader',
   sex: 'male'
