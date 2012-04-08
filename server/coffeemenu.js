@@ -1,18 +1,18 @@
-dbs = require('./config/databases')
+dbs = require('../config/databases')
 mongode = require('mongode');
 
 var mongoDb;
 
 exports.initialize = function () {
-
-    mongoDb = dbs.mongo;
-
+	console.log ("Initialize mongoDb connection.");
+	
+	mongoDb = dbs.mongo;
 }
 
 // GET
 
 exports.getBarista = function (baristaId, response) {
-  	var baristaCollection = mongoDb.collection('Barista');
+	var baristaCollection = mongoDb.collection('Barista');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	baristaCollection.findOne({"BaristaId" : baristaId}, 
 	    function(err, object) {
