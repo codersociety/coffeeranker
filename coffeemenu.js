@@ -12,7 +12,7 @@ exports.initialize = function () {
 // GET
 
 exports.getBarista = function (baristaId, response) {
-  	var baristaCollection = mongoDb.collection('BaristaLocation');
+  	var baristaCollection = mongoDb.collection('Barista');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	baristaCollection.findOne({"BaristaId" : baristaId}, 
 	    function(err, object) {
@@ -28,7 +28,7 @@ exports.getBarista = function (baristaId, response) {
 }
 
 exports.getDrinker = function (drinkerId, response) {
-  	var drinkerCollection = mongoDb.collection('DrinkerLocation');
+  	var drinkerCollection = mongoDb.collection('Drinker');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	drinkerCollection.findOne({"DrinkerId" : drinkerId}, 
 	    function(err, object) {
@@ -44,7 +44,7 @@ exports.getDrinker = function (drinkerId, response) {
 }
 
 exports.getLocation = function (locationId, response) {
-  	var locationCollection = mongoDb.collection('LocationLocation');
+  	var locationCollection = mongoDb.collection('Location');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	locationCollection.findOne({"LocationId" : locationId}, 
 	    function(err, object) {
@@ -60,7 +60,7 @@ exports.getLocation = function (locationId, response) {
 }
 
 exports.getBeverage = function (beverageId, response) {
-  	var beverageCollection = mongoDb.collection('BeverageLocation');
+  	var beverageCollection = mongoDb.collection('Beverage');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	beverageCollection.findOne({"BeverageId" : beverageId}, 
 	    function(err, object) {
@@ -76,7 +76,7 @@ exports.getBeverage = function (beverageId, response) {
 }
 
 exports.getReview = function (reviewId, response) {
-  	var reviewCollection = mongoDb.collection('ReviewLocation');
+  	var reviewCollection = mongoDb.collection('Review');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	reviewCollection.findOne({"ReviewId" : reviewId}, 
 	    function(err, object) {
@@ -94,7 +94,7 @@ exports.getReview = function (reviewId, response) {
 // POST
 
 exports.postBarista = function (response, request_body) {
-  	var baristaCollection = mongoDb.collection('BaristaLocation');
+  	var baristaCollection = mongoDb.collection('Barista');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
         baristaCollection.save(request_body,
 	    function(err, object) {
@@ -110,7 +110,7 @@ exports.postBarista = function (response, request_body) {
 }
 
 exports.postDrinker = function (response, request_body) {
-  	var drinkerCollection = mongoDb.collection('DrinkerLocation');
+  	var drinkerCollection = mongoDb.collection('Drinker');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	drinkerCollection.save(request_body, 
 	    function(err, object) {
@@ -126,7 +126,7 @@ exports.postDrinker = function (response, request_body) {
 }
 
 exports.postLocation = function (response, request_body) {
-  	var locationCollection = mongoDb.collection('LocationLocation');
+  	var locationCollection = mongoDb.collection('Location');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	locationCollection.save(request_body,
 	    function(err, object) {
@@ -142,7 +142,7 @@ exports.postLocation = function (response, request_body) {
 }
 
 exports.postBeverage = function (response, request_body) {
-  	var beverageCollection = mongoDb.collection('BeverageLocation');
+  	var beverageCollection = mongoDb.collection('Beverage');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	beverageCollection.save(request_body, 
 	    function(err, object) {
@@ -158,7 +158,7 @@ exports.postBeverage = function (response, request_body) {
 }
 
 exports.postReview = function (response, request_body) {
-  	var reviewCollection = mongoDb.collection('ReviewLocation');
+  	var reviewCollection = mongoDb.collection('Review');
 	response.writeHead(200, { 'Content-Type': 'application/json' });  
 	reviewCollection.save(request_body, 
 	    function(err, object) {

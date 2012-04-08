@@ -7,8 +7,9 @@ app.use(flatiron.plugins.http);
 
 coffeemenu.initialize();
 
+// GET
 app.router.get('/location/::locationId', function (locationId) {
-	coffeemenu.getStoreLocation(locationId, this.res);
+	coffeemenu.getLocation(locationId, this.res);
 });
 app.router.get('/barista/:baristaId', function (baristaId) {
 	coffeemenu.getBarista(baristaId, this.res);
@@ -22,8 +23,10 @@ app.router.get('/beverage/:beverageId', function(beverageId) {
 app.router.get('/review/:reviewId', function(reviewId) {
 	coffeemenu.getReview(reviewId, this.res);
 });
+
+// POST
 app.router.post('/location', function () {
-    coffeemenu.postStoreLocation(this.res, this.req.body);
+    coffeemenu.postLocation(this.res, this.req.body);
 });
 app.router.post('/barista', function () {
     coffeemenu.postBarista(this.res, this.req.body);
@@ -37,4 +40,6 @@ app.router.post('/beverage', function() {
 app.router.post('/review', function() {
 	coffeemenu.postReview(this.res, this.req.body);
 });
+
+// Listen on port 3000
 app.start(3000);
