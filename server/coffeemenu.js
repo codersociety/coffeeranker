@@ -1,5 +1,6 @@
 dbs = require('../config/databases')
 mongode = require('mongode');
+util = require('util');
 
 var mongoDb;
 
@@ -11,10 +12,11 @@ exports.initialize = function () {
 
 // GET
 
-exports.getBarista = function (baristaId, response) {
-	var baristaCollection = mongoDb.collection('Barista');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	baristaCollection.findOne({"BaristaId" : baristaId}, 
+exports.getSingleRecord = function(id, response, collectionName) {
+	var collection = mongoDb.collection(collectionName);
+	response.writeHead(200, { 'Content-Type': 'application/json' });
+	
+	collection.findOne({"_id" : id}, 
 	    function(err, object) {
 		if(object != null)
 		{
@@ -22,154 +24,119 @@ exports.getBarista = function (baristaId, response) {
 		}
 		else
 		{
-    	                response.end();
+			response.end();
 		}
     });
+}
+
+exports.getBarista = function (baristaId, response) {
+	this.getSingleRecord(baristaId, response, "Barista");
 }
 
 exports.getDrinker = function (drinkerId, response) {
-  	var drinkerCollection = mongoDb.collection('Drinker');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	drinkerCollection.findOne({"DrinkerId" : drinkerId}, 
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+	this.getSingleRecord(drinkerId, response, "Drinker");
 }
 
 exports.getLocation = function (locationId, response) {
-  	var locationCollection = mongoDb.collection('Location');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	locationCollection.findOne({"LocationId" : locationId}, 
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+	if (locationId == undefined) {
+		this.getList(response, "Location");
+	} else {
+		this.getSingleRecord(locationId, response, "Location");
+	}
 }
 
-exports.getBeverage = function (beverageId, response) {
-  	var beverageCollection = mongoDb.collection('Beverage');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	beverageCollection.findOne({"BeverageId" : beverageId}, 
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+exports.getDrink = function (drinkId, response) {
+	this.getSingleRecord(drinkId, response, "Drink");
 }
 
 exports.getReview = function (reviewId, response) {
-  	var reviewCollection = mongoDb.collection('Review');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	reviewCollection.findOne({"ReviewId" : reviewId}, 
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+	this.getSingleRecord(reviewId, response, "Review");
 }
 
 // POST
 
+exports.getList = function(response, collectionName) {
+	var collection = mongoDb.collection(collectionName);
+	response.writeHead(200, { 'Content-Type': 'application/json' });
+	
+	var first = 0;
+	
+	response.write('{ "' + collectionName + '" : { ');
+	
+	collection.find().each(function(err, item) {
+		if (item != null) {
+			if (first != 0) {
+				response.write(', ');
+			}
+			
+			var data = JSON.stringify(item);
+			console.log("List: " + data);
+			response.write(data);
+			first = 1;
+		} else {
+			response.write(" } } ");
+			response.end();
+		}
+	});
+}
+
+exports.getBaristaList = function (response) {
+	this.getList(response, "Barista");
+}
+
+exports.getDrinkerList = function (response) {
+	this.getList(response, "Drinker");
+}
+
+exports.getLocationList = function (response) {
+	this.getList(response, "Location");
+}
+
+exports.getDrinkList = function (response) {
+	this.getList(response, "Drink");
+}
+
+exports.getReviewList = function (response) {
+	this.getList(response, "Review");
+}
+
+
+// GET List 
+
+exports.postData = function (response, request_body, collectionName) {
+  	var collection = mongoDb.collection(collectionName);
+	var logString = JSON.stringify(request_body);
+	console.log(collectionName + ": " + logString);
+	
+	response.writeHead(200, { 'Content-Type': 'application/json' });
+	collection.save(request_body,
+	    function(err, saved) {
+			if( err || !saved ) 
+				console.log("Data not saved");
+			else 
+				console.log("Data saved");
+			response.write("Data Saved");
+			response.end();
+		});
+}
+
 exports.postBarista = function (response, request_body) {
-  	var baristaCollection = mongoDb.collection('Barista');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-        baristaCollection.save(request_body,
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+	this.postData(response, request_body, "Barista");
 }
 
 exports.postDrinker = function (response, request_body) {
-  	var drinkerCollection = mongoDb.collection('Drinker');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	drinkerCollection.save(request_body, 
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+	this.postData(response, request_body, "Drinker");
 }
 
 exports.postLocation = function (response, request_body) {
-  	var locationCollection = mongoDb.collection('Location');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	locationCollection.save(request_body,
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+	this.postData(response, request_body, "Location");
 }
 
-exports.postBeverage = function (response, request_body) {
-  	var beverageCollection = mongoDb.collection('Beverage');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	beverageCollection.save(request_body, 
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+exports.postDrink = function (response, request_body) {
+	this.postData(response, request_body, "Drink");
 }
 
 exports.postReview = function (response, request_body) {
-  	var reviewCollection = mongoDb.collection('Review');
-	response.writeHead(200, { 'Content-Type': 'application/json' });  
-	reviewCollection.save(request_body, 
-	    function(err, object) {
-		if(object != null)
-		{
-			response.write(JSON.stringify(object));
-		}
-		else
-		{
-    	                response.end();
-		}
-    });
+	this.postData(response, request_body, "Review");
 }
 

@@ -1,0 +1,4 @@
+{
+  "neo4j" : "http://66.150.174.181",
+  "mongo" : "mongodb://localhost:27017/coffeeranker"
+}
