@@ -6,7 +6,6 @@ var mongoDb;
 
 exports.initialize = function () {
 	console.log ("Initialize mongoDb connection.");
-	
 	mongoDb = dbs.mongo;
 }
 
@@ -15,12 +14,14 @@ exports.initialize = function () {
 exports.getSingleRecord = function(id, response, collectionName) {
 	var collection = mongoDb.collection(collectionName);
 	response.writeHead(200, { 'Content-Type': 'application/json' });
+	var o_id = new mongode.ObjectID(id);
 	
-	collection.findOne({"_id" : id}, 
+	collection.findOne({_id : o_id}, 
 	    function(err, object) {
 		if(object != null)
 		{
 			response.write(JSON.stringify(object));
+			response.end();
 		}
 		else
 		{
